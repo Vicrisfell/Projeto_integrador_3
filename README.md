@@ -1,9 +1,4 @@
-# Projeto_integrador_3
-Projeto sobre o desenvolvimento do software de controle, armazenamento e doação de produtos perecível.
+# PI-2-DSM2SEM
+Repositório referente ao trabalho de P.I da Fatec Araras
 
-Membros do Projeto
-Scrum master: Vitor C Fellzatti.​
-documentação: Thiago Rodrigues.​
-Front end: Thiago Barros.​
-Back end: Vinicius Nigras.​
-Banco de dados: Vitor Carvalho.
+Integrantes: Fernando Augusto Saldanha, Kauan Martins Bonfim, Nathalia Valim, Thiago Barros Gomes, Vitor de Carvalho
