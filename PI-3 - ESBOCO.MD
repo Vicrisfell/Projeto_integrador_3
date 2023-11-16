@@ -2,6 +2,6 @@
 
 <hr>
 
-Faça uma pesquisa sobre as metas da ONU para a saúde e o bem-estar. Você pode encontrar informações detalhadas no site oficial da ONU.
+Faça uma pesquisa sobre as metas da ONU para a FOME Você pode encontrar informações detalhadas no site oficial da ONU.
 
 <hr>
