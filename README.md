@@ -41,7 +41,7 @@ Muitas instituições lidam com uma variedade de produtos com datas de validade 
  Vinicius Nigras.
  Vitor Carvalho.
 
-![Logotipo do FOOD MANAGER](Projeto_integrador_3/DESIGN/Food_png.png)
+![Logotipo do FOOD MANAGER](DESIGN/Food_png.png)
 
 ---
 
