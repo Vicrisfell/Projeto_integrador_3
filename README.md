@@ -50,7 +50,8 @@ Muitas instituições lidam com uma variedade de produtos com datas de validade 
 + Thiago Rodrigo.
 + Vinicius Nigras.
 + Vitor Carvalho.
-
+  
+## Logo
 ![Logotipo do FOOD MANAGER](DESIGN/Food_png.png)
 
 ---
