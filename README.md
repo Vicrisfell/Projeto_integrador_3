@@ -45,11 +45,11 @@ Muitas instituições lidam com uma variedade de produtos com datas de validade 
 
 ## Equipe
 
- Vitor C Fellzatti.
- Thiago Barros.
- Thiago Rodrigo.
- Vinicius Nigras.
- Vitor Carvalho.
++ Vitor C Fellzatti.
++ Thiago Barros.
++ Thiago Rodrigo.
++ Vinicius Nigras.
++ Vitor Carvalho.
 
 ![Logotipo do FOOD MANAGER](DESIGN/Food_png.png)
 
