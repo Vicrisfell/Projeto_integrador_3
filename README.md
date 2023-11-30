@@ -35,14 +35,13 @@ Muitas instituições lidam com uma variedade de produtos com datas de validade 
 
 ## Equipe
 
-Scrum master: Vitor C Fellzatti.
-documentação: Thiago Barros.
-Front end: Thiago Rodrigo.
-Back end: Vinicius Nigras.
-Banco de dados: Vitor Carvalho.
+ Vitor C Fellzatti.
+ Thiago Barros.
+ Thiago Rodrigo.
+ Vinicius Nigras.
+ Vitor Carvalho.
 
-![image](https://github.com/Vicrisfell/Projeto_integrador_3/assets/111813682/f86c5b58-c469-4eb6-a12e-c925da3849df)
-.
+![Logotipo do FOOD MANAGER](Projeto_integrador_3/DESIGN/Food_png.png)
 
 ---
 
