@@ -28,14 +28,21 @@ Muitas instituições lidam com uma variedade de produtos com datas de validade 
 
 ## Tecnologias Utilizadas
 
-- Linguagem: [Liste as linguagens de programação utilizadas]
-- Frameworks: [Se houver, liste os frameworks utilizados]
-- Banco de Dados: [Indique o banco de dados utilizado, se aplicável]
-- Outras Ferramentas: [Mencione outras ferramentas importantes utilizadas]
+- Linguagem: [Python]
+- Frameworks: [Djongo]
+- Banco de Dados: [Mongo DB]
+- Outras Ferramentas: [asgiref==3.7.2, backports.zoneinfo==0.2.1, Django==4.0.1, djongo==1.3.6, dnspython==2.4.2, pymongo==3.12.1, pytz==2023.3.post1, sqlparse==0.2.4, typing-extensions==4.8.0, tzdata==2023.3]
 
-## Contato
+## Equipe
 
-Para mais informações ou sugestões, entre em contato conosco em [email@example.com](mailto:email@example.com).
+Scrum master: Vitor C Fellzatti.
+documentação: Thiago Barros.
+Front end: Thiago Rodrigo.
+Back end: Vinicius Nigras.
+Banco de dados: Vitor Carvalho.
+
+![image](https://github.com/Vicrisfell/Projeto_integrador_3/assets/111813682/f86c5b58-c469-4eb6-a12e-c925da3849df)
+.
 
 ---
 
