@@ -187,13 +187,54 @@
                     <div class="col-lg-7 col-12">
                         <div class="custom-block custom-block-exchange">
                             <div class="container mt-4">
+                                <h4 class="mb-4"> <img src="{% static 'images/doacao.jpg' %}"
+                                        class="exchange-image img-fluid" alt=""> Cadastro de Produtos</h4>
+
+                                <form action="{% url 'cadastroProduto' %}" method="POST">
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                    <div
+                                        class="form-group {% if field.name == 'ultimo_campo' %}ultimo-campo{% endif %}">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <strong>{{ field.label_tag }}</strong>
+                                                {% if field.name == 'nome' %}
+                                                <p class="field-nome field-value-no-border ">{{ field }}</p>
+                                                {% elif field.name == 'quantidade' %}
+                                                <p class="field-quantidade">{{ field }}</p>
+                                                {% elif field.name == 'validade' %}
+                                                <p class="field-validade">{{ field }}</p>
+                                                {% else %}
+                                                <p>{{ field }}</p>
+                                                {% endif %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    {% endfor %}
+                                    <div class="form-group ">
+                                        <div class="form-actions">
+                                            <center><button type="submit" class="btn btn-primary buttoncad"
+                                                    value="Cadastrar">
+                                                    Cadastrar
+                                                </button>
+
+                                            </center>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                        <!-- <div class="custom-block custom-block-exchange">
+                            <div class="container mt-4">
                                 <h3 class="mb-4"> <img src="{% static 'images/doacao.jpg' %}"
                                         class="exchange-image img-fluid" alt=""> Cadastro de doacoes</h3>
 
                                 <form action="{% url 'cadastroProduto' %}" method="POST">
                                     <br>
                                     {% csrf_token %}
-                                    {{form.as_p}}
+                                    {{form.as_p}}    
                                     <div class="form-actions">
                                         <center>
                                             <input type="submit" value="Cadastrar">
@@ -201,7 +242,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
+                        </div> -->
                         <footer class="site-footer">
                             <div class="container">
                                 <div class="row">
