@@ -1,0 +1,40 @@
+{% load static %}
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Orlando Saraiva do Nascimento Júnior">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <title>Biblioteca</title>
+</head>
+
+<body>
+    <header>
+        <h1>Biblioteca</h1>
+        <h2>Cadastro de Livros</h2>
+    </header>
+
+    <form action="{% url 'cadastroProduto' %}" method="POST">
+        <br>
+        {% csrf_token %}
+        {{form.as_p}}
+        <div class="form-actions">
+            <center>
+                <input type="submit" value="Cadastrar">
+            </center>
+        </div>
+    </form>
+    <br><br>
+
+    <div class="form-actions">
+        <center>
+            <form action="{% url 'index' %}" method="GET">
+                <input type="submit" value="Voltar">
+            </form>
+        </center>
+    </div>
+</body>
+
+</html>
