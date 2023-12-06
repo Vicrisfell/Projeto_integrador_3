@@ -8,6 +8,10 @@ from .services.CadastroProdutoService import (
     CadastroRequerenteService,
 )
 
+# log
+
+import logging
+
 
 # Create your views here.
 
@@ -77,8 +81,11 @@ def buscarUltimoRegistro(request):
     mongo = MongoService(conexao, "FoodManager")
     # repository = FoodManagerRepository(mongo)
     collection = mongo.db["Produtos"]
+    print(collection)
     ultimoRegistro = collection.find_one({}, sort=[("_id", -1)])
-    return render(request, "listarProdutos.html", {"ultimoRegistro": ultimoRegistro})
+    # logging.basicConfig(filename="log.txt", level=logging.INFO)
+    logging.info(f"Ultimo Registro: {ultimoRegistro}")
+    return render(request, "index.html", {"ultimoRegistro": ultimoRegistro})
 
 
 # def get_total_products():
