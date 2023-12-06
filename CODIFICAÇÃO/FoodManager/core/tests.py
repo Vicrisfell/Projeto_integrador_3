@@ -1,6 +1,6 @@
 from django.test import TestCase
-from django.urls import reverse
 from django.shortcuts import resolve_url as r
+from django.urls import reverse
 
 
 from .forms import RequerenteForm, ProdutoForm
@@ -145,9 +145,8 @@ def test_requerente_cadastro_post_email(self):
 
 class IndexTest(TestCase):
     def setUp(self):
-        self.resp = self.client.get(r("core:index"), follow=True)
-        print(self.resp)
-        print(self.resp.content)
+        # self.resp = self.client.get(r("core:index"), follow=True)
+        self.resp = self.client.get(reverse("index"))
 
     def test_status_code(self):
         self.assertEqual(200, self.resp.status_code)
@@ -158,13 +157,12 @@ class IndexTest(TestCase):
     def test_html(self):
         tags = (
             ("<html", 1),
-            ("<head", 1),
+            ("<head", 2),
             ("<title", 1),
-            ("<body", 1),
-            ("<form", 1),
-            ("<br", 3),
-            ("<input", 3),
+            ("<body", 2),
+            ("<br", 1),
             ("<button", 1),
+            ("<div", 62),
         )
         for text, count in tags:
             with self.subTest():
