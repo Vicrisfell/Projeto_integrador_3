@@ -193,12 +193,45 @@
                                 <form action="{% url 'cadastroRequerente' %}" method="POST">
                                     <br>
                                     {% csrf_token %}
+                                    {% for field in form %}
+                                    <div
+                                        class="form-group {% if field.name == 'ultimo_campo' %}ultimo-campo{% endif %}">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <strong>{{ field.label_tag }}</strong>
+                                                {% if field.name == 'nome' %}
+                                                <p class="field-nome field-value-no-border ">{{ field }}</p>
+                                                {% elif field.name == 'email' %}
+                                                <p class="field-quantidade">{{ field }}</p>
+                                                {% elif field.name == 'telefone' %}
+                                                <p class="field-validade">{{ field }}</p>
+                                                {% elif field.name == 'alimento' %}
+                                                <p class="field-alimento">{{ field }}</p>
+                                                {% else %}
+                                                <p>{{ field }}</p>
+                                                {% endif %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    {% endfor %}
+                                    <br>
+                                    <div class="form-group ">
+                                        <div class="form-actions">
+                                            <center><button type="submit" class="btn btn-primary buttoncad"
+                                                    value="Cadastrar">
+                                                    Cadastrar
+                                                </button>
+
+                                            </center>
+                                        </div>
+                                    </div>
+                                    <!-- {% csrf_token %}
                                     {{form.as_p}}
                                     <div class="form-actions">
                                         <center>
                                             <input type="submit" value="Cadastrar">
                                         </center>
-                                    </div>
+                                    </div> -->
                                 </form>
                             </div>
                         </div>
