@@ -29,6 +29,7 @@ def cadastroProduto(request):
             repository = FoodManagerRepository(mongo)
             service = CadastroProdutoService(repository)
             service.insert(form.cleaned_data)
+            return redirect("cadastroProduto")
         else:
             return render(request, "cadastroProduto.html", {"form": form})
     form = ProdutoForm()
