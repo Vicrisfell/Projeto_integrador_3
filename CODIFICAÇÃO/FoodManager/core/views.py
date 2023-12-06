@@ -88,7 +88,24 @@ def buscarUltimoRegistro(request):
     logging.info(f"Ultimo Registro: {ultimoRegistro}")
     return render(request, "index.html", {"ultimoRegistro": ultimoRegistro})
 
+def listarProdutos(request):
+    # Conectar ao MongoDB
+    conexao = ConnectionService()
+    mongo = MongoService(conexao, "FoodManager")
+    repository = FoodManagerRepository(mongo)
 
+    # Obter todos os produtos
+    produtos = list(repository.find("Produtos", **{}))
+
+    # Calcular a quantidade total
+    quantidade_total = sum([produto['quantidade'] for produto in produtos])
+
+    # Imprimir o conteúdo de produtos e a quantidade total para depuração
+    print("Produtos:", produtos)
+    print("Quantidade Total:", quantidade_total)
+
+    # Passar os produtos e a quantidade total para o template
+    return render(request, "listarProdutos.html", {"produtos": produtos, "quantidade_total": quantidade_total})
 # def get_total_products():
 #     # Conectar ao MongoDB
 #     conexao = ConnectionService()
