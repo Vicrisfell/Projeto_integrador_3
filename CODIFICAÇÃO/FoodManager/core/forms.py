@@ -69,3 +69,14 @@ class RequerenteForm(forms.Form):
         if alimento.isnumeric():
             raise forms.ValidationError("Alimento não pode ser numerico")
         return alimento
+
+
+# class DoadorForm(forms.Form):
+
+
+# # Minha colection de produtos
+# # _id 656f085fc0dd6e7dd306906c
+# # nome "Feijão"
+# # quantidade 5
+# # validade 2023-12-31T00:00:00.000+00:00
+# # formulario para usuario poder selecionar o alimento que tem cadastrado e retirar

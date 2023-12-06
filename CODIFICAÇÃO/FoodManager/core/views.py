@@ -52,12 +52,12 @@ def cadastroRequerente(request):
     return render(request, "cadastroRequerente.html", {"form": form})
 
 
-def listarProdutos(request):
-    conexao = ConnectionService()
-    mongo = MongoService(conexao, "FoodManager")
-    repository = FoodManagerRepository(mongo)
-    produtos = list(repository.find("Produtos", **{}))
-    return render(request, "listarProdutos.html", {"produtos": produtos})
+# def listarProdutos(request):
+#     conexao = ConnectionService()
+#     mongo = MongoService(conexao, "FoodManager")
+#     repository = FoodManagerRepository(mongo)
+#     produtos = list(repository.find("Produtos", **{}))
+#     return render(request, "listarProdutos.html", {"produtos": produtos})
 
 
 def listarRequerentes(request):
@@ -88,6 +88,7 @@ def buscarUltimoRegistro(request):
     logging.info(f"Ultimo Registro: {ultimoRegistro}")
     return render(request, "index.html", {"ultimoRegistro": ultimoRegistro})
 
+
 def listarProdutos(request):
     # Conectar ao MongoDB
     conexao = ConnectionService()
@@ -98,14 +99,38 @@ def listarProdutos(request):
     produtos = list(repository.find("Produtos", **{}))
 
     # Calcular a quantidade total
-    quantidade_total = sum([produto['quantidade'] for produto in produtos])
+    quantidade_total = sum([produto["quantidade"] for produto in produtos])
 
     # Imprimir o conteúdo de produtos e a quantidade total para depuração
     print("Produtos:", produtos)
     print("Quantidade Total:", quantidade_total)
 
     # Passar os produtos e a quantidade total para o template
-    return render(request, "listarProdutos.html", {"produtos": produtos, "quantidade_total": quantidade_total})
+    return render(
+        request,
+        "listarProdutos.html",
+        {"produtos": produtos, "quantidade_total": quantidade_total},
+    )
+
+
+# Minha colection de produtos
+# _id 656f085fc0dd6e7dd306906c
+# nome "Feijão"
+# quantidade 5
+# validade 2023-12-31T00:00:00.000+00:00
+def cadastroDoacao(request):
+    # Conectar ao MongoDB
+    conexao = ConnectionService()
+    mongo = MongoService(conexao, "FoodManager")
+    repository = FoodManagerRepository(mongo)
+    # Obter a coleção de produtos
+    produtos_collection = list(repository.find("Produtos", **{}))
+    # Buscar o produto pelo nome
+    produto = list(repository.find("Produtos", **{}))
+    # Atualizar a quantidade do produto
+    return render(request, "doacao.html")
+
+
 # def get_total_products():
 #     # Conectar ao MongoDB
 #     conexao = ConnectionService()
