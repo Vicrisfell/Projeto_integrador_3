@@ -30,12 +30,12 @@ Muitas instituições lidam com uma variedade de produtos com datas de validade 
 ## Tecnologias Utilizadas
 
 - Linguagem: [Python]
-- Frameworks: [Djongo]
+- Frameworks: [Django]
 - Banco de Dados: [Mongo DB]
 - Outras Ferramentas:
   + asgiref==3.7.2
   + backports.zoneinfo==0.2.1
-  + Django==4.0.1 + djongo==1.3.6
+  + Django==4.0.1 
   + dnspython==2.4.2
   + pymongo==3.12.1
   + pytz==2023.3.post1
