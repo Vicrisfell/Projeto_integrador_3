@@ -150,9 +150,15 @@
                                 Cadastro de Produtos
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cadastroRequerente' %}">
+                                <i class="bi-wallet me-2"></i>
+                                Cadastro de Requerente
+                            </a>
+                        </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'listarProdutos' %}">
+                            <a class="nav-link" href="{% url 'listarProduto' %}">
                                 <i class="bi-person me-2"></i>
                                 Listar Produtos
                             </a>
@@ -225,13 +231,6 @@
                                             </center>
                                         </div>
                                     </div>
-                                    <!-- {% csrf_token %}
-                                    {{form.as_p}}
-                                    <div class="form-actions">
-                                        <center>
-                                            <input type="submit" value="Cadastrar">
-                                        </center>
-                                    </div> -->
                                 </form>
                             </div>
                         </div>
