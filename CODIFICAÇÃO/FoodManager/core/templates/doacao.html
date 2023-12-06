@@ -196,21 +196,21 @@
                                 <h3 class="mb-4"> <img src="{% static 'images/doacao.jpg' %}"
                                         class="exchange-image img-fluid" alt=""> Doação</h3>
 
-                                <form method="post" action="{% url 'cadastroDoacao' %}">
-                                    {% csrf_token %}
-
-                                    <!-- Selecione o campo para escolher um alimento -->
-                                    <label for="alimento">Escolha um alimento:</label>
-                                    <select id="alimento" name="alimento">
-                                        {% for alimento in alimentos_disponiveis %}
-                                        <option value="{{ alimento.id }}">{{ alimento.nome }}</option>
-                                        {% endfor %}
-                                    </select>
-
-                                    <!-- Adicione outros campos e botões conforme necessário -->
-
-                                    <button type="submit">Enviar</button>
-                                </form>
+                                        <form method="post" action="{% url 'cadastroDoacao' %}">
+                                            {% csrf_token %}
+                                        
+                                            <!-- Selecione o campo para escolher um alimento -->
+                                            <label for="alimento">Escolha um alimento:</label>
+                                            <select id="alimento" name="alimento">
+                                                {% for nome_produto in nomes_produtos_disponiveis %}
+                                                <option value="{{ nome_produto }}">{{ nome_produto }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        
+                                            <!-- Adicione outros campos e botões conforme necessário -->
+                                        
+                                            <button type="submit">Enviar</button>
+                                        </form>
                             </div>
                         </div>
                         <footer class="site-footer">
