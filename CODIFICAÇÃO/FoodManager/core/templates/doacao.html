@@ -203,7 +203,7 @@
                                     <label for="alimento">Escolha um alimento:</label>
                                     <select id="alimento" name="alimento">
                                         {% for alimento in alimentos_disponiveis %}
-                                        <option value="{{ alimento }}">{{ alimento }}</option>
+                                        <option value="{{ alimento.id }}">{{ alimento.nome }}</option>
                                         {% endfor %}
                                     </select>
 

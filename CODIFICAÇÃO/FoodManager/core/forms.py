@@ -71,7 +71,12 @@ class RequerenteForm(forms.Form):
         return alimento
 
 
-# class DoadorForm(forms.Form):
+class DoadorForm(forms.Form):
+    def clean_escolha_alimento(self):
+        escolha_alimento = self.cleaned_data["alimento"]
+        if escolha_alimento == "0":
+            raise forms.ValidationError("Escolha um alimento")
+        return escolha_alimento
 
 
 # # Minha colection de produtos

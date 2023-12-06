@@ -15,3 +15,9 @@ class CadastroRequerenteService:
 
     def insert(self, data):
         return self.repository.insert("Requerentes", **data)
+
+    def update(self, data):
+        return self.repository.update("Requerentes", **data)
+
+    def delete(self, data):
+        return self.repository.delete("Requerentes", **data)

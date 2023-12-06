@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import ProdutoForm, RequerenteForm
+from .forms import ProdutoForm, RequerenteForm, DoadorForm
+from .models import Produto
 from .services.ConnectionService import ConnectionService
 from .services.MongoServie import MongoService
+from bson import ObjectId
 from .services.repositories.FoodManagerRepository import FoodManagerRepository
 from .services.CadastroProdutoService import (
     CadastroProdutoService,
@@ -120,43 +122,52 @@ def listarProdutos(request):
 # validade 2023-12-31T00:00:00.000+00:00
 def cadastroDoacao(request):
     # Conectar ao MongoDB
-    conexao = ConnectionService()
-    mongo = MongoService(conexao, "FoodManager")
-    repository = FoodManagerRepository(mongo)
-    # Obter a coleção de produtos
-    produtos_collection = list(repository.find("Produtos", **{}))
-    # Buscar o produto pelo nome
-    produto = list(repository.find("Produtos", **{}))
-    # Atualizar a quantidade do produto
-    return render(request, "doacao.html")
+    # conexao = ConnectionService()
+    # mongo = MongoService(conexao, "FoodManager")
+    # repository = FoodManagerRepository(mongo)
+    # # Obter a coleção de produtos
+    # produtos_collection = list(repository.find("Produtos", **{}))
+    # # Buscar o produto pelo nome
+    # produto = list(repository.find("Produtos", **{}))
+    # # Atualizar a quantidade do produto
+    # return render(request, "doacao.html")
+    def cadastroDoacao(request):
+        if request.method == "POST":
+            form = DoadorForm(request.POST)
+            if form.is_valid():
+                # Obtenha os dados do formulário
+                escolha_alimento = form.cleaned_data["alimento"]
 
+                # Conectar ao MongoDB
+                conexao = ConnectionService()
+                mongo = MongoService(conexao, "FoodManager")
+                repository = FoodManagerRepository(mongo)
+                collection = mongo.db["Produtos"]
 
-# def get_total_products():
-#     # Conectar ao MongoDB
-#     conexao = ConnectionService()
-#     mongo = MongoService(conexao, "FoodManager")
-#     repository = FoodManagerRepository(mongo)
+                # Obter o produto escolhido
+                produto = collection.find_one(
+                    "Produtos", {"_id": ObjectId(escolha_alimento)}
+                )
 
-#     # Obter a coleção de produtos
-#     produtos_collection = repository.get_collection("Produtos")
+                # Criar uma nova doação
+                nova_doacao = Produto(
+                    alimento=produto["nome"],
+                    quantidade=1,  # Ajuste conforme necessário
+                    validade=produto["validade"],
+                    # Adicione outros campos conforme necessário
+                )
 
-#     # Agregação para obter o total de produtos
-#     total_products_aggregation = [
-#         {"$group": {"_id": None, "totalQuantidade": {"$sum": "$quantidade"}}}
-#     ]
+                # Salvar a doação no banco de dados
+                collection.insert(nova_doacao, "Doacoes")
 
-#     total_products_result = list(
-#         produtos_collection.aggregate(total_products_aggregation)
-#     )
+                # Atualizar a quantidade do produto, se necessário
+                # Certifique-se de ajustar conforme necessário com a lógica específica
 
-#     # Retornar o total de produtos (ou 0 se não houver resultados)
-#     total_products = (
-#         total_products_result[0]["totalQuantidade"] if total_products_result else 0
-#     )
+                return redirect(
+                    "listarProdutos"
+                )  # Redirecionar para a página de sucesso após a doação
 
-#     return total_products
+        else:
+            form = DoadorForm()
 
-
-# def index_with_total(request):
-#     total_produtos = get_total_products()
-#     return render(request, "index.html", {"total_produtos": total_produtos})
+        return render(request, "doacao.html", {"form": form})
