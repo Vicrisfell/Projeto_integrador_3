@@ -45,10 +45,6 @@ class MongoService:
         collection = self.db[collection]
         collection.update_one(filter_query, {"$set": update_data})
 
-    # def update(self, collection, **kwargs):
-    #     collection = self.db[collection]
-    #     collection.update_one(kwargs)
-
     # index_with_total
     def index_with_total(self, collection, **kwargs):
         collection = self.db[collection]

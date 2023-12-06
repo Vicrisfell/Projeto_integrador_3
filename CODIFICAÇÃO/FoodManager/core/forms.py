@@ -71,12 +71,32 @@ class RequerenteForm(forms.Form):
         return alimento
 
 
-class DoadorForm(forms.Form):
-    def clean_escolha_alimento(self):
-        escolha_alimento = self.cleaned_data["alimento"]
-        if escolha_alimento == "0":
-            raise forms.ValidationError("Escolha um alimento")
-        return escolha_alimento
+# class DoadorForm(forms.Form):
+#     def clean_escolha_alimento(self):
+#         escolha_alimento = self.cleaned_data["alimento"]
+#         if escolha_alimento == "0":
+#             raise forms.ValidationError("Escolha um alimento")
+#         return escolha_alimento
+
+
+class DoacaoForm(forms.Form):
+    alimento = forms.ChoiceField(choices=[])
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["alimento"].choices = kwargs.get("choices")
+        self.fields["alimento"].initial = kwargs.get("initial")
+        self.fields["alimento"].label = kwargs.get("label")
+        self.fields["alimento"].help_text = kwargs.get("help_text")
+        self.fields["alimento"].required = kwargs.get("required")
+        self.fields["alimento"].widget.attrs["class"] = "form-control"
+        self.fields["alimento"].widget.attrs["id"] = "alimento"
+        self.fields["alimento"].widget.attrs["name"] = "alimento"
+        self.fields["alimento"].widget.attrs["placeholder"] = "Selecione o alimento"
+        self.fields["alimento"].widget.attrs["required"] = "required"
+        self.fields["alimento"].widget.attrs["onchange"] = "this.form.submit()"
+        self.fields["alimento"].widget.attrs["style"] = "width: 100%;"
+        self.fields["alimento"].widget.attrs["value"] = kwargs.get("initial")
 
 
 # # Minha colection de produtos

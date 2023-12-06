@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import ProdutoForm, RequerenteForm
+from django import forms
+from .forms import DoacaoForm, ProdutoForm, RequerenteForm
 from .services.ConnectionService import ConnectionService
 from .services.MongoServie import MongoService
 from .services.repositories.FoodManagerRepository import FoodManagerRepository
@@ -50,14 +51,6 @@ def cadastroRequerente(request):
             return render(request, "cadastroRequerente.html", {"form": form})
     form = RequerenteForm()
     return render(request, "cadastroRequerente.html", {"form": form})
-
-
-# def listarProdutos(request):
-#     conexao = ConnectionService()
-#     mongo = MongoService(conexao, "FoodManager")
-#     repository = FoodManagerRepository(mongo)
-#     produtos = list(repository.find("Produtos", **{}))
-#     return render(request, "listarProdutos.html", {"produtos": produtos})
 
 
 def listarRequerentes(request):
@@ -123,28 +116,36 @@ def cadastroDoacao(request):
     conexao = ConnectionService()
     mongo = MongoService(conexao, "FoodManager")
     repository = FoodManagerRepository(mongo)
-
+    print(conexao)
     # Obter todos os produtos
     produtos = list(repository.find("Produtos", **{}))
 
     # Filtrar produtos em estoque com quantidade acima de 1
-    produtos_disponiveis = [produto for produto in produtos if produto["quantidade"] > 1]
+    produtos_disponiveis = [
+        produto for produto in produtos if produto["quantidade"] > 1
+    ]
 
     # Obter a lista de nomes dos produtos disponíveis
     nomes_produtos_disponiveis = [produto["nome"] for produto in produtos_disponiveis]
+    print(nomes_produtos_disponiveis)
 
     # Verificar se o formulário foi submetido
     if request.method == "POST":
         # Obter o nome do alimento selecionado no formulário
-        alimento_selecionado = request.POST.get("alimento")
-
+        alimento = request.POST.get("nomes_produtos_disponiveis")
+        print(alimento)
         # Restante do código para processar o formulário...
 
     # Passar a lista de produtos disponíveis para o template
     return render(
         request,
-        "doacao.html",
-        {"produtos_disponiveis": produtos_disponiveis, "nomes_produtos_disponiveis": nomes_produtos_disponiveis},
+        "cadastroRequerente.html",
+        # "doacao.html",
+        {
+            "form": DoacaoForm(),
+            "produtos_disponiveis": produtos_disponiveis,
+            "nomes_produtos_disponiveis": nomes_produtos_disponiveis,
+        },
     )
 
 
