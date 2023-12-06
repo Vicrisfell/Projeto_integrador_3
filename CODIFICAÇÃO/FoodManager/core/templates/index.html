@@ -193,13 +193,36 @@
                             <small>Estoque Total de Alimentos</small>
 
                             <h2 class="mt-2 mb-3">
-                                <P>{{ total_produtos }}</P>
+                                <P>numero total</P>
                             </h2>
-
                             <div class="custom-block-numbers d-flex align-items-center">
+                                {% if ultimoRegistro %}
                                 <span>
                                     <small>Ultimo Alimento</small>
-                                    <p>Arroz
+                                    <p>{{ ultimoRegistro.nome }}
+                                        <small>Não perecível</small>
+                                    </p>
+                                    <br>
+                                </span>
+                                <div class="ms-auto">
+                                    <small>Quantidade: </small>
+                                    <p>{{ ultimoRegistro.quantidade }}</p>
+                                </div>
+
+                                <div class="d-flex">
+                                    <div>
+                                        <small>Validade</small>
+                                        <p>{{ ultimoRegistro.validade|date:"d/m/Y" }}</p>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <p>Nenhum alimento cadastrado ainda.</p>
+                                {% endif %}
+                            </div>
+                            <!-- <div class="custom-block-numbers d-flex align-items-center">
+                                <span>
+                                    <small>Ultimo Alimento</small>
+                                    <p>{{Arroz}}
                                         <small>Não perecivel</small>
                                     </p>
                                     <br>
@@ -209,16 +232,15 @@
                                     <p>2560</p>
                                 </div>
 
-                            </div>
 
-                            <div class="d-flex">
-                                <div>
-                                    <small>Validade</small>
-                                    <p>01/12/2023</p>
+
+                                <div class="d-flex">
+                                    <div>
+                                        <small>Validade</small>
+                                        <p>01/12/2023</p>
+                                    </div>
                                 </div>
-
-
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="custom-block bg-white">

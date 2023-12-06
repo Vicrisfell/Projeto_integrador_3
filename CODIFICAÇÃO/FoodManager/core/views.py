@@ -71,6 +71,16 @@ def listarConta(request):
     return render(request, "listarConta.html", {"conta": conta})
 
 
+# buscar ultimo registro no mongo
+def buscarUltimoRegistro(request):
+    conexao = ConnectionService()
+    mongo = MongoService(conexao, "FoodManager")
+    # repository = FoodManagerRepository(mongo)
+    collection = mongo.db["Produtos"]
+    ultimoRegistro = collection.find_one({}, sort=[("_id", -1)])
+    return render(request, "listarProdutos.html", {"ultimoRegistro": ultimoRegistro})
+
+
 # def get_total_products():
 #     # Conectar ao MongoDB
 #     conexao = ConnectionService()

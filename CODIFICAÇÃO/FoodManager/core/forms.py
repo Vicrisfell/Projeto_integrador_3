@@ -1,7 +1,10 @@
 from django import forms
-import datetime
+from datetime import datetime
+
 
 # produto, requerente, doador
+
+# testes referentes a html e status
 
 
 class ProdutoForm(forms.Form):
@@ -25,17 +28,12 @@ class ProdutoForm(forms.Form):
 
     def clean_validade(self):
         validade = self.cleaned_data["validade"]
-        if validade < datetime.date.today():
+        data_atual = datetime.now().date()
+        if validade < data_atual:
             raise forms.ValidationError(
                 "Data de validade não pode ser anterior a data atual"
             )
         return validade
-
-    def clean_conta(self):
-        conta = self.cleaned_data["conta"]
-        if conta < 0:
-            raise forms.ValidationError("Conta não pode ser negativa")
-        return conta
 
 
 class RequerenteForm(forms.Form):

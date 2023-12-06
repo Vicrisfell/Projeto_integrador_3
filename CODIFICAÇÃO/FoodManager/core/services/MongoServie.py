@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, date, time
 from core.services.ConnectionService import ConnectionService
 
 
@@ -11,12 +11,16 @@ class MongoService:
         data = {}
         collection = self.db[collection]
         for key, value in kwargs.items():
-            if isinstance(value, datetime.datetime):
-                data[key] = value
-            elif isinstance(value, datetime.date):
-                data[key] = datetime.datetime(value.year, value.month, value.day)
-            else:
-                data[key] = value
+            if key == "validade" and isinstance(value, date):
+                value = datetime.combine(value, time())
+
+            data[key] = value
+            # if isinstance(value, datetime.datetime):
+            #     data[key] = value
+            # elif isinstance(value, datetime.date):
+            #     data[key] = datetime.datetime(value.year, value.month, value.day)
+            # else:
+            #     data[key] = value
 
         collection.insert_one(data)
 

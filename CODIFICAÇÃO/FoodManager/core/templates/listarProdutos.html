@@ -200,7 +200,7 @@
                                         <p>{{ produto.quantidade }}</p>
                                     </li>
                                     <li class="list-group-item"><strong>Validade:</strong>
-                                        <p>{{ produto.validade }}</p>
+                                        <p>{{ produto.validade|date:"j \\ F \ Y" }}</p>
                                     </li>
                                     <br>
                                     {% endfor %}

@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.shortcuts import resolve_url as r
 
 from .forms import RequerenteForm, ProdutoForm
 
@@ -138,3 +139,31 @@ def test_requerente_cadastro_post_email(self):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Alimento não pode ser numerico")
+
+
+class IndexTest(TestCase):
+    def setUp(self):
+        self.resp = self.client.get(r("core:index"), follow=True)
+        print(self.resp)
+        print(self.resp.content)
+
+    def test_status_code(self):
+        self.assertEqual(200, self.resp.status_code)
+
+    def test_template(self):
+        self.assertTemplateUsed(self.resp, "index.html")
+
+    def test_html(self):
+        tags = (
+            ("<html", 1),
+            ("<head", 1),
+            ("<title", 1),
+            ("<body", 1),
+            ("<form", 1),
+            ("<br", 3),
+            ("<input", 3),
+            ("<button", 1),
+        )
+        for text, count in tags:
+            with self.subTest():
+                self.assertContains(self.resp, text, count)
