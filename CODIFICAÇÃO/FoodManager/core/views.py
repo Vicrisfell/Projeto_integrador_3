@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django import forms
 from bson import ObjectId
 from django.http import HttpResponse
+import unittest
 from .forms import DoacaoForm, ProdutoForm, RequerenteForm
 from .services.ConnectionService import ConnectionService
 from .services.MongoServie import MongoService
@@ -15,6 +16,7 @@ from .services.CadastroProdutoService import (
 # log
 
 import logging
+import unittest
 
 
 # Create your views here.
@@ -39,7 +41,6 @@ def cadastroProduto(request):
             service = CadastroProdutoService(repository)
             service.insert(form.cleaned_data)
             return redirect("cadastroProduto")
-            produtos = list(repository.find("Produtos", **{}))
         else:
             return render(request, "cadastroProduto.html", {"form": form})
     form = ProdutoForm()
@@ -204,3 +205,10 @@ def relatorio(request):
             "requerentes": requerentes,
         },
     )
+
+
+class TestMongoService(unittest.TestCase):
+    def setUp(self):
+        self.connection = ConnectionService()
+        self.mongo_service = MongoService(self.connection, "test_db")
+        self.repository = FoodManagerRepository(self.mongo_service)
