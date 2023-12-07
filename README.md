@@ -55,8 +55,8 @@ Muitas instituições lidam com uma variedade de produtos com datas de validade 
 ![Logotipo do FOOD MANAGER](DESIGN/Food_png.png)
 
 ---
-## covarage dos teste
-![covarege do steste](DOCUMENTAÇÃO/IMG-20231206-WA0003.jpg)
+## Coverage
+![covarege do steste](DOCUMENTAÇÃO/coverage.png)
 
 Este README está sujeito a alterações à medida que o projeto evolui.
 
