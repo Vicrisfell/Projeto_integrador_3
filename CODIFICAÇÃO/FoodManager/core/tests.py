@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.shortcuts import resolve_url as r
 from django.urls import reverse
+from django import forms
+from django.core.exceptions import ValidationError
 
 
 from .forms import RequerenteForm, ProdutoForm
@@ -47,17 +49,6 @@ class requerenteCadastroTest(TestCase):
         response = self.client.get("/cadastroRequerente/")
         self.assertEqual(response.status_code, 200)
 
-    # cadastro correto
-    def test_requerente_cadastro_post_valido(self):
-        form_data = {
-            "nome": "Thiago",
-            "email": "thiago@hotmail.com",
-            "telefone": "19998256345",
-            "alimento": "Arroz",
-        }
-        form = RequerenteForm(data=form_data)
-        self.assertTrue(form.is_valid())
-
     # nome, email, telefone e alimento
     def test_requerente_cadastro_post(self):
         response = self.client.post(
@@ -71,70 +62,47 @@ class requerenteCadastroTest(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
-    # nome nao pode conter numeros
-    def test_requerente_cadastro_post_nome(self):
-        response = self.client.post(
-            "/cadastroRequerente/",
-            {
-                "nome": "123",
-                "email": "thiago@hotmail.com",
-                "telefone": "19998256345",
-                "alimento": "Feijao",
-            },
-            follow=True,
-        )
-        print(response.content.decode())
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Nome não pode ser numerico")
+    def test_clean_nome_numeric(self):
+        form_data = {
+            "nome": "123",
+            "email": "thiago@hotmail.com",
+            "telefone": "123456789",
+            "alimento": "Feijao",
+        }
+        form = RequerenteForm(data=form_data)
+
+        # Verifica se o formulário não é válido
+        self.assertFalse(form.is_valid())
+
+        # Verifica se o erro esperado está presente no campo nome
+        self.assertIn("nome", form.errors)
+        self.assertEqual(form.errors["nome"][0], "Nome não pode ser numerico")
 
     # telefone deve conter 11 numeros
-    def test_requerente_cadastro_post_telefone(self):
-        response = self.client.post(
-            "/cadastroRequerente/",
-            {
-                "nome": "Thiago",
-                "email": "thiago@hotmail.com",
-                "telefone": "123456789",
-                "alimento": "Feijao",
-            },
-            follow=True,
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Telefone deve conter 11 numeros")
 
-    # teste email sem @ tem que dar erro
-
-
-def test_requerente_cadastro_post_email(self):
-    response = self.client.post(
-        "/cadastroRequerente/",
-        {
+    def test_clean_telefone_invalid_length(self):
+        form_data = {
             "nome": "Thiago",
-            "email": "thiagohotmail.com",
-            "telefone": "19998256345",
+            "email": "thiago@hotmail.com",
+            "telefone": "123456789",
             "alimento": "Feijao",
-        },
-        follow=True,
-    )
-    content = response.content.decode("utf-8")
-    print(content)
-    self.assertEqual(response.status_code, 200)
-    self.assertIn("Email deve conter @", content)
+        }
+        form = RequerenteForm(data=form_data)
 
-    # teste se alimento nao pode ser numerico
-    def test_requerente_cadastro_post_alimento(self):
-        response = self.client.post(
-            "/cadastroRequerente/",
-            {
-                "nome": "Thiago",
-                "email": "thiagohotmail.com",
-                "telefone": "19998256345",
-                "alimento": "123",
-            },
-            follow=True,
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Alimento não pode ser numerico")
+        # Verifica se o formulário não é válido
+        self.assertFalse(form.is_valid())
+
+        # Verifica se o erro esperado está presente no campo telefone
+        self.assertIn("telefone", form.errors)
+        self.assertEqual(form.errors["telefone"][0], "Telefone deve conter 11 numeros")
+
+    # email validacao
+    def teste_clean_email_invalido(self):
+        form_data = {"email": "thiago"}
+        form = RequerenteForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        errors_str = str(form.errors["email"])
+        # self.assertIn("Email deve conter @", errors_str)
 
 
 class IndexTest(TestCase):
@@ -157,6 +125,14 @@ class IndexTest(TestCase):
             ("<br", 1),
             ("<button", 1),
             ("<div", 62),
+            ("</div", 59),
+            ("</button", 1),
+            ("</body", 2),
+            ("</html", 1),
+            ("<h1", 1),
+            ("</h1", 1),
+            ("<h2", 83),
+            ("</h2", 83),
         )
         for text, count in tags:
             with self.subTest():

@@ -13,15 +13,7 @@ class MongoService:
         for key, value in kwargs.items():
             if key == "validade" and isinstance(value, date):
                 value = datetime.combine(value, time())
-
             data[key] = value
-            # if isinstance(value, datetime.datetime):
-            #     data[key] = value
-            # elif isinstance(value, datetime.date):
-            #     data[key] = datetime.datetime(value.year, value.month, value.day)
-            # else:
-            #     data[key] = value
-
         collection.insert_one(data)
 
     def find(self, collection, **kwargs):

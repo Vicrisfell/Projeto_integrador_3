@@ -69,14 +69,9 @@ class RequerenteForm(forms.Form):
 
     # telefone do requerente deve conter 11 numeros
     def clean_telefone(self):
-        # telefone = self.cleaned_data["telefone"]
-        telefone = self.cleaned_data.get("telefone", "")
-        # Remova espaços, parênteses e hífens antes de contar os dígitos
-        telefone_digits = "".join(filter(str.isdigit, telefone))
-        if len(telefone_digits) != 11:
-            raise forms.ValidationError(
-                "Telefone deve conter 11 numeros", code="invalid_phone"
-            )
+        telefone = self.cleaned_data["telefone"]
+        if len(telefone) != 11:
+            raise forms.ValidationError("Telefone deve conter 11 numeros")
         return telefone
 
     # email deve conter @
