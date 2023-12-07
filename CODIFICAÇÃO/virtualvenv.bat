@@ -11,6 +11,9 @@ set "default_folder=C:\Users\%USERNAME%"\
 python -m venv venv
 call venv\Scripts\activate
 
+:: Instala as dependências do projeto a partir do arquivo requirements.txt
+pip install -r requirements.txt
+
 :: Exibe mensagem de conclusão
 echo Ambiente virtual Python criado e ativado em "%default_folder%\project_temp\venv"
 
