@@ -58,31 +58,6 @@ class RequerenteForm(forms.Form):
     email = forms.EmailField(required=True)
     telefone = forms.CharField(max_length=11, required=True)
 
-    def criar(request):
-        if request.method == "POST":
-            form = PlantasForm(request.POST)
-            if form.is_valid():
-                nome_cientifico = form.cleaned_data["nome_cientifico"]
-                nome_popular = form.cleaned_data["nome_popular"]
-                melhor_solo = form.cleaned_data["melhor_solo"]
-                clima = form.cleaned_data["clima"]
-                regiao = form.cleaned_data["regiao"]
-                dificuldade_cultivar = form.cleaned_data["dificuldade_cultivar"]
-                ml_dia = form.cleaned_data["ml_dia"]
-                criar_planta(
-                    nome_cientifico,
-                    nome_popular,
-                    melhor_solo,
-                    clima,
-                    regiao,
-                    dificuldade_cultivar,
-                    ml_dia,
-                )
-                return redirect("consultar")
-        else:
-            form = PlantasForm()
-        return render(request, "criar.html", {"form": form})
-
     # metodo validacao
     def clean_nome(self):
         nome = self.cleaned_data["nome"]

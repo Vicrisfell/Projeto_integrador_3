@@ -50,6 +50,7 @@ def cadastroProduto(request):
 
 # cadastro de requerentes
 def cadastroRequerente(request):
+    produtos = []
     if request.method == "POST":
         form = RequerenteForm(request.POST)
         if form.is_valid():
@@ -59,13 +60,12 @@ def cadastroRequerente(request):
             service = CadastroRequerenteService(repository)
             service.insert(form.cleaned_data)
             return redirect("cadastroRequerente")
-            produtos = list(repository.find("Produtos", **{}))
         else:
             return render(
-                request, "cadastroProduto.html", {"form": form, "produtos": produtos}
+                request, "cadastroRequerente.html", {"form": form, "produtos": produtos}
             )
     form = RequerenteForm()
-    return render(request, "listarRequerentes.html", {"form": form})
+    return render(request, "cadastroRequerente.html", {"form": form})
 
 
 def listarRequerentes(request):
@@ -172,13 +172,15 @@ def remover_alimento(request, alimento_id):
     repository = FoodManagerRepository(mongo)
     alimento_id = ObjectId(alimento_id)
     print(alimento_id)
+
     produto = repository.find("Produtos", filters={"_id": alimento_id})
+    print(produto)
     if produto:
         repository.delete("Produtos", {"_id": alimento_id})
         repository.insert("Relatorio", **produto)
-        return redirect("listarProdutos")
+        return redirect("listarProdutos.html")
     else:
-        return redirect("cadastroProduto")
+        return redirect("cadastroProduto.html")
 
 
 # collection relatorio que ira receber os produtos que sairam da collection produtos e seram inseridos na collection relatorio com os dados do produto e dados do requerente

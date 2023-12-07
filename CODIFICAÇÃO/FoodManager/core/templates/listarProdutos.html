@@ -208,15 +208,9 @@
                                     <li class="list-group-item"><strong>Validade:</strong>
                                         <p>{{ produto.validade|date:"j \\ F \ Y" }}</p>
                                     </li>
-                                    <form method="POST" action="{% url 'editar_alimento' alimento_id=produto.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit">Editar</button>
-                                    </form>
 
-                                    <form method="POST" action="{% url 'remover_alimento' alimento_id=produto.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit">Excluir</button>
-                                    </form>
+
+
                                     <br>
                                     {% endfor %}
                                 </ul>

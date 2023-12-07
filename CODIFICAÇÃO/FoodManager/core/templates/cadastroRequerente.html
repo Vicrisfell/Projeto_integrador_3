@@ -212,29 +212,18 @@
                                                 {% elif field.name == 'telefone' %}
                                                 <p class="field-validade">{{ field }}</p>
                                                 {% elif field.name == 'alimento' %}
-                                                <p class="field-alimento">{{ field }}</p>
 
-                                                {% elif field.name == 'alimento.id' %}
-                                                <p class="field-alimento">{{ field }}</p>
-
-                                                {% else %}
                                                 <p>{{ field }}</p>
                                                 {% endif %}
                                             </li>
                                         </ul>
 
                                     </div>
-
+                                    {% endfor %}
+                                    {% endif %}
                                     <br>
                                     <div class="form-group">
                                         <div class="form-actions">
-                                            <center>
-                                                <button type="submit" class="btn btn-primary buttoncad">
-
-
-
-                                                </button>
-                                            </center>
                                             <center>
                                                 <button type="submit" class="btn btn-primary buttoncad"
                                                     value="Cadastrar">
@@ -243,8 +232,6 @@
                                             </center>
                                         </div>
                                     </div>
-                                    {% endfor %}
-                                    {% endif %}
                                 </form>
 
                             </div>
