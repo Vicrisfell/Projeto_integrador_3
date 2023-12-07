@@ -37,9 +37,9 @@ class MongoService:
         collection = self.db[collection]
         return collection.find(kwargs)
 
-    def delete(self, collection, **kwargs):
+    def delete(self, collection, filter_query):
         collection = self.db[collection]
-        collection.delete_one(kwargs)
+        collection.delete_one(filter_query)
 
     def update(self, collection, filter_query, update_data):
         collection = self.db[collection]

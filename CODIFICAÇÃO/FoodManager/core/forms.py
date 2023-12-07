@@ -5,6 +5,7 @@ from .services.repositories.FoodManagerRepository import FoodManagerRepository
 from .services.ConnectionService import ConnectionService
 from .services.MongoServie import MongoService
 from .services.CadastroProdutoService import CadastroRequerenteService
+
 # produto, requerente, doador
 
 # testes referentes a html e status
@@ -43,15 +44,44 @@ class RequerenteForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         conexao = ConnectionService()
-        mongo = MongoService(conexao,'FoodManager')
+        mongo = MongoService(conexao, "FoodManager")
         food_manager = FoodManagerRepository(mongo)
-        alimentos = food_manager.find('Produtos',**{})
-        opcoes = [(alimento['nome'], alimento['nome']) for alimento in alimentos]
-        self.fields['alimento'] = forms.ChoiceField(choices=opcoes, required=True)
-        
+        alimentos = food_manager.find("Produtos", **{})
+        # opcoes = [(alimento['nome'], alimento['nome']) for alimento in alimentos]
+        opcoes = [(str(alimento["_id"]), alimento["nome"]) for alimento in alimentos]
+        self.fields["alimento"] = forms.ChoiceField(choices=opcoes, required=True)
+        self.fields["alimento_id"] = forms.CharField(
+            widget=forms.HiddenInput(), required=True
+        )
+
     nome = forms.CharField(max_length=100, required=True)
     email = forms.EmailField(required=True)
     telefone = forms.CharField(max_length=11, required=True)
+
+    def criar(request):
+        if request.method == "POST":
+            form = PlantasForm(request.POST)
+            if form.is_valid():
+                nome_cientifico = form.cleaned_data["nome_cientifico"]
+                nome_popular = form.cleaned_data["nome_popular"]
+                melhor_solo = form.cleaned_data["melhor_solo"]
+                clima = form.cleaned_data["clima"]
+                regiao = form.cleaned_data["regiao"]
+                dificuldade_cultivar = form.cleaned_data["dificuldade_cultivar"]
+                ml_dia = form.cleaned_data["ml_dia"]
+                criar_planta(
+                    nome_cientifico,
+                    nome_popular,
+                    melhor_solo,
+                    clima,
+                    regiao,
+                    dificuldade_cultivar,
+                    ml_dia,
+                )
+                return redirect("consultar")
+        else:
+            form = PlantasForm()
+        return render(request, "criar.html", {"form": form})
 
     # metodo validacao
     def clean_nome(self):
@@ -92,7 +122,6 @@ class RequerenteForm(forms.Form):
 
 class DoacaoForm(forms.Form):
     alimento = forms.ChoiceField(choices=[])
-
 
 
 # # Minha colection de produtos

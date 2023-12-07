@@ -11,5 +11,10 @@ urlpatterns = [
     path("listarRequerente/", views.listarRequerentes, name="listarRequerente"),
     path("listarConta/", views.listarConta, name="listarConta"),
     path("cadastroDoacao/", views.cadastroDoacao, name="cadastroDoacao"),
+    path(
+        "remover_alimento/<str:alimento_id>/",
+        views.remover_alimento,
+        name="remover_alimento",
+    ),
     # path("index_with_total/", views.index_with_total, name="index_with_total"),
 ]

@@ -181,45 +181,36 @@
             </nav>
 
             <main class="main-wrapper col-md-9 ms-sm-auto py-4 col-lg-9 px-md-4 border-start">
-                <div class="title-group mb-3">
+                <!-- <div class="title-group mb-3">
                     <p class="mb-0 font-italic">Nunca desista de um sonho só por causa do tempo que você vai levar para
                         realizá-lo. O tempo vai passar de qualquer forma.
                     </p>
 
                     <small class="text-muted font-italic">Autor Desconhecido</small>
-                </div>
+                </div> -->
 
                 <div class="row my-4">
                     <div class="col-lg-7 col-12">
                         <div class="custom-block custom-block-exchange">
                             <div class="container mt-4">
                                 <h3 class="mb-4"> <img src="{% static 'images/doacao.jpg' %}"
-                                        class="exchange-image img-fluid" alt=""> Lista de Produtos</h3>
-                                <P>Quantidade Total: {{ quantidade_total }}</P>
-                                <ul class="list-group">
-                                    {% for produto in produtos %}
+                                        class="exchange-image img-fluid" alt=""> Doação</h3>
 
-                                    <li class="list-group-item"><strong>Alimento:</strong>
-                                        <p> {{ produto.nome }}</p>
-                                    </li>
-                                    <li class="list-group-item"><strong>Quantidade:</strong>
-                                        <p>{{ produto.quantidade }}</p>
-                                    </li>
-                                    <li class="list-group-item"><strong>Validade:</strong>
-                                        <p>{{ produto.validade|date:"j \\ F \ Y" }}</p>
-                                    </li>
-                                    <form method="POST" action="{% url 'editar_alimento' alimento_id=produto.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit">Editar</button>
-                                    </form>
+                                <form method="post" action="{% url 'cadastroDoacao' %}">
+                                    {% csrf_token %}
 
-                                    <form method="POST" action="{% url 'remover_alimento' alimento_id=produto.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit">Excluir</button>
-                                    </form>
-                                    <br>
-                                    {% endfor %}
-                                </ul>
+                                    <!-- Selecione o campo para escolher um alimento -->
+                                    <label for="alimento">Escolha um alimento:</label>
+                                    <select id="alimento" name="alimento">
+                                        {% for nome_produto in nomes_produtos_disponiveis %}
+                                        <option value="{{ nome_produto }}">{{ nome_produto }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <!-- Adicione outros campos e botões conforme necessário -->
+
+                                    <button type="submit">Enviar</button>
+                                </form>
                             </div>
                         </div>
                         <footer class="site-footer">
@@ -252,7 +243,7 @@
                 width: 380,
                 type: 'pie',
             },
-            labels: ['Doações', 'Pedidos', 'Estoque',],
+            labels: ['Balance', 'Expense', 'Credit Loan',],
             responsive: [{
                 breakpoint: 480,
                 options: {
@@ -273,13 +264,13 @@
     <script type="text/javascript">
         var options = {
             series: [{
-                name: 'Doações',
+                name: 'Income',
                 data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
             }, {
-                name: 'Pedidos',
+                name: 'Expense',
                 data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
             }, {
-                name: 'Estoque',
+                name: 'Transfer',
                 data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
             }],
             chart: {

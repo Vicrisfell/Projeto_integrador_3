@@ -213,21 +213,26 @@
                                                 <p class="field-validade">{{ field }}</p>
                                                 {% elif field.name == 'alimento' %}
                                                 <p class="field-alimento">{{ field }}</p>
+
+                                                {% elif field.name == 'alimento.id' %}
+                                                <p class="field-alimento">{{ field }}</p>
+
                                                 {% else %}
                                                 <p>{{ field }}</p>
                                                 {% endif %}
                                             </li>
                                         </ul>
-                                        
+
                                     </div>
-                                    {% endfor %}
+
                                     <br>
                                     <div class="form-group">
                                         <div class="form-actions">
                                             <center>
-                                                <button type="submit" class="btn btn-primary buttoncad"
-                                                    >
-                                                    <a href="{%url 'remover_alimento' alimento_id=alimento.id %}" class="editar-button">Editar</a>
+                                                <button type="submit" class="btn btn-primary buttoncad">
+
+
+
                                                 </button>
                                             </center>
                                             <center>
@@ -238,6 +243,7 @@
                                             </center>
                                         </div>
                                     </div>
+                                    {% endfor %}
                                     {% endif %}
                                 </form>
 

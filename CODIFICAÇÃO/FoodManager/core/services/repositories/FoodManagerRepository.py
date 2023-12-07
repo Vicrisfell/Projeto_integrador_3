@@ -14,5 +14,5 @@ class FoodManagerRepository:
     def update(self, collection, **kwargs):
         self.conexao.update(collection, **kwargs)
 
-    def delete(self, collection, **kwargs):
-        self.conexao.delete(collection, **kwargs)
+    def delete(self, collection, filter_query):
+        self.conexao.delete(collection, filter_query)

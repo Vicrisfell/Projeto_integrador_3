@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django import forms
+from bson import ObjectId
+from django.http import HttpResponse
 from .forms import DoacaoForm, ProdutoForm, RequerenteForm
 from .services.ConnectionService import ConnectionService
 from .services.MongoServie import MongoService
@@ -19,14 +21,12 @@ import logging
 
 
 def index(request):
-    #renderizacao da pesquisa na collection produtos 
+    # renderizacao da pesquisa na collection produtos
     conexao = ConnectionService()
     mongo = MongoService(conexao, "FoodManager")
     repository = FoodManagerRepository(mongo)
     produtos = list(repository.find("Produtos", **{}))
     return render(request, "index.html", {"produtos": produtos})
-
-
 
 
 def cadastroProduto(request):
@@ -41,7 +41,9 @@ def cadastroProduto(request):
             return redirect("cadastroProduto")
             produtos = list(repository.find("Produtos", **{}))
         else:
-            return render(request, "cadastroProduto.html", {"form": form, 'produtos': produto})
+            return render(
+                request, "cadastroProduto.html", {"form": form, "produtos": produtos}
+            )
     form = ProdutoForm()
     return render(request, "cadastroProduto.html", {"form": form})
 
@@ -56,10 +58,14 @@ def cadastroRequerente(request):
             repository = FoodManagerRepository(mongo)
             service = CadastroRequerenteService(repository)
             service.insert(form.cleaned_data)
+            return redirect("cadastroRequerente")
+            produtos = list(repository.find("Produtos", **{}))
         else:
-            return render(request, "cadastroRequerente.html", {"form": form})
+            return render(
+                request, "cadastroProduto.html", {"form": form, "produtos": produtos}
+            )
     form = RequerenteForm()
-    return render(request, "cadastroRequerente.html", {"form": form})
+    return render(request, "listarRequerentes.html", {"form": form})
 
 
 def listarRequerentes(request):
@@ -157,22 +163,44 @@ def cadastroDoacao(request):
         },
     )
 
-#remover alimento              
-def remover_alimento(request,alimento_id):
+
+# remover alimento
+def remover_alimento(request, alimento_id):
     # Conectar ao MongoDB
     conexao = ConnectionService()
     mongo = MongoService(conexao, "FoodManager")
     repository = FoodManagerRepository(mongo)
     alimento_id = ObjectId(alimento_id)
-    repository.delete("Produtos",alimento_id)
-    return redirect('listarProdutos')
+    print(alimento_id)
+    produto = repository.find("Produtos", filters={"_id": alimento_id})
+    if produto:
+        repository.delete("Produtos", {"_id": alimento_id})
+        repository.insert("Relatorio", **produto)
+        return redirect("listarProdutos")
+    else:
+        return redirect("cadastroProduto")
 
 
-    # alimento_id = ObjectId(alimento_id)
-    # connection = ConexaoService()
-    # bd = MongoConnectionService(connection,"FoodShare")
-    # repository = FoodShareRepository(bd)
-    # doacao = DoacaoService(repository)
-    # doacao.delete(alimento_id,request.session.get('user_id'))
-    # doacao.__del__
-    # return redirect('relatorio')
+# collection relatorio que ira receber os produtos que sairam da collection produtos e seram inseridos na collection relatorio com os dados do produto e dados do requerente
+
+
+def relatorio(request):
+    # Conectar ao MongoDB
+    conexao = ConnectionService()
+    mongo = MongoService(conexao, "FoodManager")
+    repository = FoodManagerRepository(mongo)
+    # Obter todos os produtos
+    produtos = list(repository.find("Produtos", **{}))
+    # Obter todos os requerentes
+    requerentes = list(repository.find("Requerentes", **{}))
+    # Obter todos os requerentes
+    print("Produtos:", produtos)
+    # Passar os produtos e a quantidade total para o template
+    return render(
+        request,
+        "relatorio",
+        {
+            "produtos": produtos,
+            "requerentes": requerentes,
+        },
+    )
