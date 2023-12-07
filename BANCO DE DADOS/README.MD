@@ -14,7 +14,7 @@ db.Requerentes.aggregate([
       foreignField: "nome",
       as: "produto"
     }
-  },
+  },<br>
   {
     $unwind: "$produto"
   },
@@ -23,7 +23,7 @@ db.Requerentes.aggregate([
       "produto.nome": "Feijão" 
     }
   },
-  {
+  {<br>
     $merge: {
       into: "Requerentes", 
       whenMatched: "merge", 
