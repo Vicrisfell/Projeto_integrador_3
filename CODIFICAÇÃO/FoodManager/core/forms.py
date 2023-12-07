@@ -62,14 +62,21 @@ class RequerenteForm(forms.Form):
     def clean_nome(self):
         nome = self.cleaned_data["nome"]
         if nome.isnumeric():
-            raise forms.ValidationError("Nome não pode ser numerico")
+            raise forms.ValidationError(
+                "Nome não pode ser numerico", code="numeric_name"
+            )
         return nome
 
     # telefone do requerente deve conter 11 numeros
     def clean_telefone(self):
-        telefone = self.cleaned_data["telefone"]
-        if len(telefone) != 11:
-            raise forms.ValidationError("Telefone deve conter 11 numeros")
+        # telefone = self.cleaned_data["telefone"]
+        telefone = self.cleaned_data.get("telefone", "")
+        # Remova espaços, parênteses e hífens antes de contar os dígitos
+        telefone_digits = "".join(filter(str.isdigit, telefone))
+        if len(telefone_digits) != 11:
+            raise forms.ValidationError(
+                "Telefone deve conter 11 numeros", code="invalid_phone"
+            )
         return telefone
 
     # email deve conter @
@@ -83,7 +90,9 @@ class RequerenteForm(forms.Form):
     def clean_alimento(self):
         alimento = self.cleaned_data["alimento"]
         if alimento.isnumeric():
-            raise forms.ValidationError("Alimento não pode ser numerico")
+            raise forms.ValidationError(
+                "Alimento não pode ser numerico", code="numeric_name"
+            )
         return alimento
 
 

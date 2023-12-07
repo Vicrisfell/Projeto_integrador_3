@@ -41,9 +41,7 @@ def cadastroProduto(request):
             return redirect("cadastroProduto")
             produtos = list(repository.find("Produtos", **{}))
         else:
-            return render(
-                request, "cadastroProduto.html", {"form": form, "produtos": produtos}
-            )
+            return render(request, "cadastroProduto.html", {"form": form})
     form = ProdutoForm()
     return render(request, "cadastroProduto.html", {"form": form})
 

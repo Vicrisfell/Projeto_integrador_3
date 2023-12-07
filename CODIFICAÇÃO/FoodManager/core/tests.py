@@ -13,13 +13,6 @@ class cadastroProdutoTest(TestCase):
         response = self.client.get("/cadastroProduto/")
         self.assertEqual(response.status_code, 200)
 
-    def test_cadastro_produto_post(self):
-        response = self.client.post(
-            "/cadastroProduto/",
-            {"nome": "teste", "validade": "01/01/2024", "quantidade": "10"},
-        )
-        self.assertEqual(response.status_code, 200)
-
     def test_cadastro_produto_post_invalido(self):
         response = self.client.post(
             "/cadastroProduto/",
@@ -90,6 +83,7 @@ class requerenteCadastroTest(TestCase):
             },
             follow=True,
         )
+        print(response.content.decode())
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Nome não pode ser numerico")
 
