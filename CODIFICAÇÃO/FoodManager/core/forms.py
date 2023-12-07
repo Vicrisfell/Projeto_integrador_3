@@ -1,7 +1,10 @@
 from django import forms
 from datetime import datetime
 
-
+from .services.repositories.FoodManagerRepository import FoodManagerRepository
+from .services.ConnectionService import ConnectionService
+from .services.MongoServie import MongoService
+from .services.CadastroProdutoService import CadastroRequerenteService
 # produto, requerente, doador
 
 # testes referentes a html e status
@@ -37,10 +40,18 @@ class ProdutoForm(forms.Form):
 
 
 class RequerenteForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        conexao = ConnectionService()
+        mongo = MongoService(conexao,'FoodManager')
+        food_manager = FoodManagerRepository(mongo)
+        alimentos = food_manager.find('Produtos',**{})
+        opcoes = [(alimento['nome'], alimento['nome']) for alimento in alimentos]
+        self.fields['alimento'] = forms.ChoiceField(choices=opcoes, required=True)
+        
     nome = forms.CharField(max_length=100, required=True)
     email = forms.EmailField(required=True)
     telefone = forms.CharField(max_length=11, required=True)
-    alimento = forms.CharField(max_length=100, required=True)
 
     # metodo validacao
     def clean_nome(self):
@@ -82,21 +93,6 @@ class RequerenteForm(forms.Form):
 class DoacaoForm(forms.Form):
     alimento = forms.ChoiceField(choices=[])
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["alimento"].choices = kwargs.get("choices")
-        self.fields["alimento"].initial = kwargs.get("initial")
-        self.fields["alimento"].label = kwargs.get("label")
-        self.fields["alimento"].help_text = kwargs.get("help_text")
-        self.fields["alimento"].required = kwargs.get("required")
-        self.fields["alimento"].widget.attrs["class"] = "form-control"
-        self.fields["alimento"].widget.attrs["id"] = "alimento"
-        self.fields["alimento"].widget.attrs["name"] = "alimento"
-        self.fields["alimento"].widget.attrs["placeholder"] = "Selecione o alimento"
-        self.fields["alimento"].widget.attrs["required"] = "required"
-        self.fields["alimento"].widget.attrs["onchange"] = "this.form.submit()"
-        self.fields["alimento"].widget.attrs["style"] = "width: 100%;"
-        self.fields["alimento"].widget.attrs["value"] = kwargs.get("initial")
 
 
 # # Minha colection de produtos

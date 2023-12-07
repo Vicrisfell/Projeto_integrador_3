@@ -197,9 +197,9 @@
                     <div class="col-lg-7 col-12">
                         <div class="custom-block">
                             <small>Estoque Total de Alimentos</small>
-
+                            {% for produto in produtos %}
                             <h2 class="mt-2 mb-3">
-                                <P>Quantidade Total: {{ quantidade_total }}</P>
+                                <P>Quantidade Total: {{ produto.quantidade }}</P>
                             </h2>
                             <div class="custom-block-numbers d-flex align-items-center">
                                 {% if ultimoRegistro %}
@@ -248,6 +248,7 @@
                                     </div>
                                 </div>
                             </div> -->
+                            {% endfor %}
                         </div>
 
                         <div class="custom-block bg-white">
