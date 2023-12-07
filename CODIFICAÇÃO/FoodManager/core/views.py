@@ -7,6 +7,7 @@ from .services.repositories.FoodManagerRepository import FoodManagerRepository
 from .services.CadastroProdutoService import (
     CadastroProdutoService,
     CadastroRequerenteService,
+    DoacaoService,
 )
 
 # log
@@ -18,7 +19,14 @@ import logging
 
 
 def index(request):
-    return render(request, "index.html")
+    #renderizacao da pesquisa na collection produtos 
+    conexao = ConnectionService()
+    mongo = MongoService(conexao, "FoodManager")
+    repository = FoodManagerRepository(mongo)
+    produtos = list(repository.find("Produtos", **{}))
+    return render(request, "index.html", {"produtos": produtos})
+
+
 
 
 def cadastroProduto(request):
@@ -31,8 +39,9 @@ def cadastroProduto(request):
             service = CadastroProdutoService(repository)
             service.insert(form.cleaned_data)
             return redirect("cadastroProduto")
+            produtos = list(repository.find("Produtos", **{}))
         else:
-            return render(request, "cadastroProduto.html", {"form": form})
+            return render(request, "cadastroProduto.html", {"form": form, 'produtos': produto})
     form = ProdutoForm()
     return render(request, "cadastroProduto.html", {"form": form})
 
@@ -148,33 +157,22 @@ def cadastroDoacao(request):
         },
     )
 
-
-# def get_total_products():
-#     # Conectar ao MongoDB
-#     conexao = ConnectionService()
-#     mongo = MongoService(conexao, "FoodManager")
-#     repository = FoodManagerRepository(mongo)
-
-#     # Obter a coleção de produtos
-#     produtos_collection = repository.get_collection("Produtos")
-
-#     # Agregação para obter o total de produtos
-#     total_products_aggregation = [
-#         {"$group": {"_id": None, "totalQuantidade": {"$sum": "$quantidade"}}}
-#     ]
-
-#     total_products_result = list(
-#         produtos_collection.aggregate(total_products_aggregation)
-#     )
-
-#     # Retornar o total de produtos (ou 0 se não houver resultados)
-#     total_products = (
-#         total_products_result[0]["totalQuantidade"] if total_products_result else 0
-#     )
-
-#     return total_products
+#remover alimento              
+def remover_alimento(request,alimento_id):
+    # Conectar ao MongoDB
+    conexao = ConnectionService()
+    mongo = MongoService(conexao, "FoodManager")
+    repository = FoodManagerRepository(mongo)
+    alimento_id = ObjectId(alimento_id)
+    repository.delete("Produtos",alimento_id)
+    return redirect('listarProdutos')
 
 
-# def index_with_total(request):
-#     total_produtos = get_total_products()
-#     return render(request, "index.html", {"total_produtos": total_produtos})
+    # alimento_id = ObjectId(alimento_id)
+    # connection = ConexaoService()
+    # bd = MongoConnectionService(connection,"FoodShare")
+    # repository = FoodShareRepository(bd)
+    # doacao = DoacaoService(repository)
+    # doacao.delete(alimento_id,request.session.get('user_id'))
+    # doacao.__del__
+    # return redirect('relatorio')
