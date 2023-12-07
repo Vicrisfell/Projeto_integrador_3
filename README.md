@@ -56,7 +56,7 @@ Muitas instituições lidam com uma variedade de produtos com datas de validade 
 
 ---
 ## covarage dos teste
-![covarege do steste](DOCUMENTAÇÃO/IMG-20231206-WA0003.jpg)
+![covarege do steste](DOCUMENTAÇÃO/coverage.jpg)
 
 Este README está sujeito a alterações à medida que o projeto evolui.
 
