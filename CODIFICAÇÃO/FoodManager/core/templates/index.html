@@ -156,12 +156,12 @@
                                 Cadastro de Requerente
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="{% url 'cadastroDoacao' %}">
                                 <i class="bi-wallet me-2"></i>
                                 Controle estoque
                             </a>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'listarProdutos' %}">
@@ -196,60 +196,42 @@
                 <div class="row my-4">
                     <div class="col-lg-7 col-12">
                         <div class="custom-block">
-                            <small>Estoque Total de Alimentos</small>
-                            {% for produto in produtos %}
+                            <!-- {% for produto in produtos %}
                             <h2 class="mt-2 mb-3">
-                                <P>Quantidade Total: {{ produto.quantidade }}</P>
-                                <P>Produto: {{ produto.nome }}</P>
+                                <P>Quantidade Total: {{ quantidade_total }}</P>
                             </h2>
-                            <div class="custom-block-numbers d-flex align-items-center">
-                                {% if ultimoRegistro %}
-                                <span>
-                                    <small>Ultimo Alimento</small>
-                                    <p>{{ ultimoRegistro.nome }}
-                                        <small>Não perecível</small>
-                                    </p>
-                                    <br>
-                                </span>
-                                <div class="ms-auto">
-                                    <small>Quantidade: </small>
-                                    <p>{{ ultimoRegistro.quantidade }}</p>
+                            {% endfor %} -->
+                            <div class="custom-block">
+                                <small>Estoque Total de Alimentos</small>
+
+                                <h2 class="mt-2 mb-3">767</h2>
+
+                                <div class="custom-block-numbers d-flex align-items-center">
+                                    <span>
+                                        <small>Ultimo Alimento</small>
+                                        <p>Arroz
+                                            <small>Não perecivel</small>
+                                        </p>
+                                        <br>
+                                    </span>
+                                    <div class="ms-auto">
+                                        <small>Quantidade: </small>
+                                        <p>38</p>
+                                    </div>
 
                                 </div>
 
                                 <div class="d-flex">
                                     <div>
                                         <small>Validade</small>
-                                        <p>{{ ultimoRegistro.validade|date:"d/m/Y" }}</p>
+                                        <p>11/02/2024</p>
                                     </div>
+
+
                                 </div>
-                                {% else %}
-                                <p>Nenhum alimento cadastrado ainda.</p>
-                                {% endif %}
                             </div>
-                            <!-- <div class="custom-block-numbers d-flex align-items-center">
-                                <span>
-                                    <small>Ultimo Alimento</small>
-                                    <p>{{Arroz}}
-                                        <small>Não perecivel</small>
-                                    </p>
-                                    <br>
-                                </span>
-                                <div class="ms-auto">
-                                    <small>Quantidade: </small>
-                                    <p>2560</p>
-                                </div>
 
 
-
-                                <div class="d-flex">
-                                    <div>
-                                        <small>Validade</small>
-                                        <p>01/12/2023</p>
-                                    </div>
-                                </div>
-                            </div> -->
-                            {% endfor %}
                         </div>
 
                         <div class="custom-block bg-white">
