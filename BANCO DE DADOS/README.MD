@@ -1,6 +1,6 @@
 
 Nosso exemplo de aggregate 
-
+<img src="aggregate.png">
 db.Requerentes.aggregate([<br>
   {<br>
     $match: {<br>
